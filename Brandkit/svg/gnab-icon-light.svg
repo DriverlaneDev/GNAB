@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 200 200" role="img" aria-label="GNAB app icon">
+  <rect x="8" y="8" width="184" height="184" rx="46" fill="#F5F6F8"/>
+  <g fill="none" stroke="#C3CAD6" stroke-width="10" stroke-linecap="round">
+    <path d="M52 74 L52 52 L74 52"/><path d="M148 74 L148 52 L126 52"/>
+    <path d="M52 126 L52 148 L74 148"/><path d="M148 126 L148 148 L126 148"/>
+  </g>
+  <g fill="none" stroke="#0E1116" stroke-width="16" stroke-linecap="round">
+    <path d="M100 56 L100 82"/><path d="M100 118 L100 144"/>
+    <path d="M56 100 L82 100"/><path d="M118 100 L144 100"/>
+  </g>
+  <circle cx="100" cy="100" r="10" fill="#0E1116"/>
+</svg>

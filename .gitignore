@@ -1,0 +1,25 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+[Oo]ut/
+publish/
+
+# Visual Studio / Rider / VS Code
+.vs/
+.vscode/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Claude Code local config (not part of the project)
+.claude/
+
+# OS cruft
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Runtime data (settings/error logs live in %AppData%\Gnab, not the repo)
+*.log

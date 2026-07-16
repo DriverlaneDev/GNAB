@@ -1,0 +1,7 @@
+# Normalize line endings on checkin; let Git manage the working-copy form.
+* text=auto
+
+# Binary assets — never touch line endings.
+*.png binary
+*.ico binary
+*.exe binary

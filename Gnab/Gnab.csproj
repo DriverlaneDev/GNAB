@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>Gnab</AssemblyName>
+    <RootNamespace>Gnab</RootNamespace>
+    <ApplicationIcon>gnab.ico</ApplicationIcon>
+    <Product>GNAB</Product>
+    <AssemblyTitle>GNAB</AssemblyTitle>
+    <Company>GNAB</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="gnab.ico">
+      <LogicalName>gnab.ico</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

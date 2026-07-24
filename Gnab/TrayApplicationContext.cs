@@ -35,7 +35,7 @@ public sealed class TrayApplicationContext : ApplicationContext
         _trayIcon = new NotifyIcon
         {
             Icon = IconFactory.CreateTrayIcon(),
-            Text = "GNAB",
+            Text = $"GNAB v{AppInfo.Version}",
             ContextMenuStrip = menu,
             Visible = true
         };

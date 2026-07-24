@@ -12,6 +12,8 @@
     <Product>GNAB</Product>
     <AssemblyTitle>GNAB</AssemblyTitle>
     <Company>GNAB</Company>
+    <!-- Single source of truth for the version shown in the UI; keep in step with the release tag. -->
+    <Version>1.0.2</Version>
     <!--
       Per-monitor DPI awareness. Without this the process is only system-DPI aware, so Windows
       virtualizes coordinates on any monitor whose scaling differs from the primary: captures come

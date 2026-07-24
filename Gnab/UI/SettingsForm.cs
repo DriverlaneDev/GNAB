@@ -110,6 +110,8 @@ public sealed class SettingsForm : Form
         DialogResult = DialogResult.Cancel, UseMnemonic = false
     };
 
+    private readonly Label _lblVersion = new() { Text = $"v{AppInfo.Version}", AutoSize = true };
+
     /// <summary>
     /// Raised while a HotkeyField is actively waiting for a new key combination, so the tray context
     /// can pause global hotkey registration just for that moment instead of the whole dialog's
@@ -147,6 +149,11 @@ public sealed class SettingsForm : Form
         Controls.Add(_btnOk);
         Controls.Add(_btnCancel);
         AcceptButton = _btnOk;
+
+        // Bottom-left of the footer, vertically centered against the OK/Cancel row.
+        _lblVersion.Location = new Point(26, 306 + (_btnOk.Height - _lblVersion.Height) / 2);
+        _mutedLabels.Add(_lblVersion);
+        Controls.Add(_lblVersion);
 
         LoadFromSettings(current);
         ApplyTheme(ThemeManager.Current);

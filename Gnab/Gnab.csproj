@@ -12,6 +12,13 @@
     <Product>GNAB</Product>
     <AssemblyTitle>GNAB</AssemblyTitle>
     <Company>GNAB</Company>
+    <!--
+      Per-monitor DPI awareness. Without this the process is only system-DPI aware, so Windows
+      virtualizes coordinates on any monitor whose scaling differs from the primary: captures come
+      back stretched/blurry and screen coordinates don't line up with what the user sees. PerMonitorV2
+      gives true physical pixels on every monitor at any scaling.
+    -->
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
   </PropertyGroup>
 
   <ItemGroup>

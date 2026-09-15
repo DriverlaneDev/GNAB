@@ -77,9 +77,12 @@ public sealed class CapturePromptForm : Form
         {
             Text = text,
             Location = location,
-            AutoSize = true,
-            AutoSizeMode = AutoSizeMode.GrowOnly,
-            MinimumSize = new Size(110, 36),
+            // Fixed size, not AutoSize. AutoSize controls that aren't in a layout container re-measure
+            // inconsistently during the DPI-scaling pass a PerMonitorV2 window gets while it's shown,
+            // which made these buttons land at the wrong width most of the time. A fixed size scales
+            // deterministically under AutoScaleMode.Dpi, so every button is always identical. The width
+            // comfortably fits the longest label ("Save + Copy") at the emphasis font at any scaling.
+            Size = new Size(110, 40),
             UseMnemonic = false
         };
         button.Click += (_, _) =>

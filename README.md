@@ -25,6 +25,7 @@ GNAB sits quietly in your system tray and captures the screen the moment you pre
 - **Global hotkeys** — capture from anywhere without switching windows; fully customizable
 - **Pick what happens after capture** — save to a file, copy to the clipboard, both, open in an editor, open the built-in markup editor, or be asked each time
 - **Built-in markup editor** — crop, draw with a pen or pencil, pick any color, undo, then save or copy
+- **Copy text with OCR** — on the capture prompt, hit **Copy Text** to pull the words straight out of a screenshot onto your clipboard, using the OCR engine built into Windows (offline, no setup, no API keys)
 - **Region selector** with a color-matched crosshair and dimmed overlay
 - **Light / Dark / Match Windows** theming
 - **Auto-save or prompt** — drop captures straight into a folder, or choose a location each time
@@ -63,7 +64,7 @@ All three can be changed under **Settings → Hotkeys** — click **Capture**, t
 Requires the [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0).
 
 ```powershell
-git clone https://github.com/NoahStein-SSI/GNAB.git
+git clone https://github.com/DriverLane-Dev/GNAB.git
 cd GNAB
 dotnet build Gnab/Gnab.csproj -c Release
 ```

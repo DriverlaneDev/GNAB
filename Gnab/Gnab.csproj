@@ -2,7 +2,14 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <!--
+      Target a Windows 10 SDK (not plain net8.0-windows) so the built-in OCR APIs
+      (Windows.Media.Ocr, Windows.Graphics.Imaging) project into the app. SupportedOSPlatformVersion
+      stays at 1809 — the OCR APIs long predate it — so the app still runs on every Win10/11 build we
+      support and the platform-compatibility analyzer stays quiet.
+    -->
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -13,7 +20,7 @@
     <AssemblyTitle>GNAB</AssemblyTitle>
     <Company>GNAB</Company>
     <!-- Single source of truth for the version shown in the UI; keep in step with the release tag. -->
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <!--
       Per-monitor DPI awareness. Without this the process is only system-DPI aware, so Windows
       virtualizes coordinates on any monitor whose scaling differs from the primary: captures come

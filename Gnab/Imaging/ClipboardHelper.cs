@@ -21,4 +21,22 @@ public static class ClipboardHelper
 
         return false;
     }
+
+    public static bool TrySetText(string text)
+    {
+        for (var attempt = 0; attempt < 5; attempt++)
+        {
+            try
+            {
+                Clipboard.SetText(text);
+                return true;
+            }
+            catch (ExternalException)
+            {
+                Thread.Sleep(75);
+            }
+        }
+
+        return false;
+    }
 }

@@ -23,7 +23,7 @@ public sealed class CapturePromptForm : Form
         ShowInTaskbar = false;
         TopMost = true;
         StartPosition = FormStartPosition.CenterScreen;
-        ClientSize = new Size(400, 190);
+        ClientSize = new Size(400, 235);
         KeyPreview = true;
 
         _label = new Label
@@ -35,12 +35,16 @@ public sealed class CapturePromptForm : Form
         };
         Controls.Add(_label);
 
-        _saveButton = AddButton("Save", CaptureAction.Save, new Point(20, 75));
-        AddButton("Copy", CaptureAction.Copy, new Point(145, 75));
-        AddButton("Save + Copy", CaptureAction.SaveAndCopy, new Point(270, 75));
-        AddButton("Edit", CaptureAction.Edit, new Point(20, 125));
-        AddButton("Markup", CaptureAction.Markup, new Point(145, 125));
-        _cancelButton = AddButton("Cancel", CaptureAction.Cancel, new Point(270, 125));
+        // Grouped by column: save actions (col 1), copy actions (col 2), editors (col 3); Cancel on
+        // its own row. Copy Text sits directly under Copy since both copy the capture — one as an
+        // image, one as recognized text.
+        _saveButton = AddButton("Save", CaptureAction.Save, new Point(20, 72));
+        AddButton("Copy", CaptureAction.Copy, new Point(145, 72));
+        AddButton("Edit", CaptureAction.Edit, new Point(270, 72));
+        AddButton("Save + Copy", CaptureAction.SaveAndCopy, new Point(20, 120));
+        AddButton("Copy Text", CaptureAction.CopyText, new Point(145, 120));
+        AddButton("Markup", CaptureAction.Markup, new Point(270, 120));
+        _cancelButton = AddButton("Cancel", CaptureAction.Cancel, new Point(270, 178));
 
         AcceptButton = _saveButton;
         CancelButton = _cancelButton;

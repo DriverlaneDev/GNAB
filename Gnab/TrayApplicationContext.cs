@@ -122,6 +122,12 @@ public sealed class TrayApplicationContext : ApplicationContext
             return;
         }
 
+        if (action == CaptureAction.CopyText)
+        {
+            ProcessCopyText(bmp);
+            return;
+        }
+
         string? savedPath = null;
         var shouldSave = action is CaptureAction.Save or CaptureAction.SaveAndCopy;
         var shouldCopy = action is CaptureAction.Copy or CaptureAction.SaveAndCopy or CaptureAction.Edit;
@@ -169,6 +175,55 @@ public sealed class TrayApplicationContext : ApplicationContext
         using var prompt = new CapturePromptForm();
         prompt.ShowDialog();
         return prompt.ChosenAction;
+    }
+
+    private void ProcessCopyText(Bitmap bmp)
+    {
+        OcrService.OcrResult result;
+        try
+        {
+            // RecognizeAsync runs off the UI thread, so blocking here can't deadlock on a sync context.
+            result = Task.Run(() => OcrService.RecognizeAsync(bmp)).GetAwaiter().GetResult();
+        }
+        catch
+        {
+            // OCR is best-effort; a failure must never take down the capture pipeline.
+            _trayIcon.ShowBalloonTip(2500, "Text capture failed",
+                "Couldn't read text from that screenshot.", ToolTipIcon.Warning);
+            return;
+        }
+
+        // The no-result cases below always notify, even when per-capture notifications are off: the user
+        // explicitly asked for text, so silence would just read as "it's broken".
+        if (!result.EngineAvailable)
+        {
+            _trayIcon.ShowBalloonTip(6000, "Text capture unavailable",
+                "No OCR language is installed. Add one under Windows Settings > Time & language > Language & region.",
+                ToolTipIcon.Warning);
+            return;
+        }
+
+        var text = result.Text.Trim();
+        if (text.Length == 0)
+        {
+            _trayIcon.ShowBalloonTip(2500, "No text found",
+                "GNAB didn't find any readable text in that screenshot.", ToolTipIcon.Warning);
+            return;
+        }
+
+        if (!ClipboardHelper.TrySetText(result.Text))
+        {
+            _trayIcon.ShowBalloonTip(2500, "Clipboard busy",
+                "Found text, but couldn't copy it — try again.", ToolTipIcon.Warning);
+            return;
+        }
+
+        if (_settings.ShowNotifications)
+        {
+            var words = text.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries).Length;
+            var message = words == 1 ? "Copied 1 word to the clipboard" : $"Copied {words} words to the clipboard";
+            _trayIcon.ShowBalloonTip(1500, "Text copied", message, ToolTipIcon.Info);
+        }
     }
 
     private void ProcessMarkup(Bitmap bmp)

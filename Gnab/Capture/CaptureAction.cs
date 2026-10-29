@@ -7,5 +7,6 @@ public enum CaptureAction
     SaveAndCopy,
     Edit,
     Markup,
+    CopyText,
     Cancel
 }

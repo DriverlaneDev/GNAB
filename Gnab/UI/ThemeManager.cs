@@ -98,6 +98,26 @@ public static class ThemeManager
         }
     }
 
+    /// <summary>
+    /// A red-tinted "discard" treatment for a Cancel/dismiss button so it stands out from the neutral
+    /// actions. Red is the conventional discard signal and reads clearly without competing with the
+    /// green brand. The palette has no red, so the (mode-specific) values are defined here.
+    /// </summary>
+    public static void StyleDangerButton(RoundedButton button, ThemePalette palette)
+    {
+        var fill = palette.IsDark ? Color.FromArgb(0x3A, 0x22, 0x24) : Color.FromArgb(0xFC, 0xEB, 0xEB);
+        var text = palette.IsDark ? Color.FromArgb(0xF0, 0x99, 0x95) : Color.FromArgb(0xA3, 0x2D, 0x2D);
+        var border = palette.IsDark ? Color.FromArgb(0x8A, 0x3A, 0x3A) : Color.FromArgb(0xD8, 0x6B, 0x6B);
+
+        button.FlatStyle = FlatStyle.Flat;
+        button.BackColor = fill;
+        button.ForeColor = text;
+        button.Font = EmphasisFont;
+        button.BorderColor = border;
+        button.BorderThickness = 1;
+        button.Invalidate();
+    }
+
     public static void StyleTextBox(TextBox textBox, ThemePalette palette)
     {
         textBox.BackColor = palette.InputFill;

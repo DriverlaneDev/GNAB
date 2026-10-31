@@ -35,15 +35,16 @@ public sealed class CapturePromptForm : Form
         };
         Controls.Add(_label);
 
-        // Grouped by column: save actions (col 1), copy actions (col 2), editors (col 3); Cancel on
-        // its own row. Copy Text sits directly under Copy since both copy the capture — one as an
-        // image, one as recognized text.
+        // Grouped by column: save actions (col 1), copy actions (col 2), editors (col 3). The bottom
+        // row holds the two "don't keep this one" actions — Retry (re-run the capture) and Cancel —
+        // right-aligned and set apart from the actions above.
         _saveButton = AddButton("Save", CaptureAction.Save, new Point(20, 72));
         AddButton("Copy", CaptureAction.Copy, new Point(145, 72));
         AddButton("Edit", CaptureAction.Edit, new Point(270, 72));
         AddButton("Save + Copy", CaptureAction.SaveAndCopy, new Point(20, 120));
         AddButton("Copy Text", CaptureAction.CopyText, new Point(145, 120));
         AddButton("Markup", CaptureAction.Markup, new Point(270, 120));
+        AddButton("Retry", CaptureAction.Retry, new Point(145, 178));
         _cancelButton = AddButton("Cancel", CaptureAction.Cancel, new Point(270, 178));
 
         AcceptButton = _saveButton;
@@ -71,6 +72,12 @@ public sealed class CapturePromptForm : Form
 
         foreach (var button in _buttons)
         {
+            if (button == _cancelButton)
+            {
+                ThemeManager.StyleDangerButton(button, palette);
+                continue;
+            }
+
             ThemeManager.StyleButton(button, palette, emphasized: button == _saveButton);
         }
     }

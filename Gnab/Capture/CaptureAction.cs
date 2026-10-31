@@ -8,5 +8,6 @@ public enum CaptureAction
     Edit,
     Markup,
     CopyText,
+    Retry,
     Cancel
 }

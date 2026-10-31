@@ -86,16 +86,23 @@ public sealed class TrayApplicationContext : ApplicationContext
         {
             ThemeManager.Refresh(_settings.Theme);
 
-            using var bmp = mode switch
+            // Loop so "Retry" on the prompt can re-run the same capture mode — e.g. redo a region drag
+            // — without the user pressing the hotkey again. Each pass grabs a fresh capture.
+            bool retry;
+            do
             {
-                CaptureMode.FullScreen => ScreenCapture.CaptureFullScreen(),
-                CaptureMode.ActiveWindow => ScreenCapture.CaptureActiveWindow(),
-                CaptureMode.Region => CaptureRegionInteractive(),
-                _ => null
-            };
+                using var bmp = mode switch
+                {
+                    CaptureMode.FullScreen => ScreenCapture.CaptureFullScreen(),
+                    CaptureMode.ActiveWindow => ScreenCapture.CaptureActiveWindow(),
+                    CaptureMode.Region => CaptureRegionInteractive(),
+                    _ => null
+                };
 
-            if (bmp == null) return;
-            ProcessCapture(bmp);
+                if (bmp == null) return;
+                retry = ProcessCapture(bmp);
+            }
+            while (retry);
         }
         finally
         {
@@ -111,21 +118,23 @@ public sealed class TrayApplicationContext : ApplicationContext
         return selector.Result;
     }
 
-    private void ProcessCapture(Bitmap bmp)
+    /// <returns>True if the user chose Retry and the caller should re-capture; false when done.</returns>
+    private bool ProcessCapture(Bitmap bmp)
     {
         var action = ResolveAction();
-        if (action == CaptureAction.Cancel) return;
+        if (action == CaptureAction.Retry) return true;
+        if (action == CaptureAction.Cancel) return false;
 
         if (action == CaptureAction.Markup)
         {
             ProcessMarkup(bmp);
-            return;
+            return false;
         }
 
         if (action == CaptureAction.CopyText)
         {
             ProcessCopyText(bmp);
-            return;
+            return false;
         }
 
         string? savedPath = null;
@@ -155,6 +164,8 @@ public sealed class TrayApplicationContext : ApplicationContext
             var icon = shouldCopy && !copied ? ToolTipIcon.Warning : ToolTipIcon.Info;
             _trayIcon.ShowBalloonTip(1500, "Screenshot captured", message, icon);
         }
+
+        return false;
     }
 
     private CaptureAction ResolveAction()

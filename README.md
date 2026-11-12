@@ -64,7 +64,7 @@ All three can be changed under **Settings → Hotkeys** — click **Capture**, t
 Requires the [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0).
 
 ```powershell
-git clone https://github.com/DriverLane-Dev/GNAB.git
+git clone https://github.com/DriverlaneDev/GNAB.git
 cd GNAB
 dotnet build Gnab/Gnab.csproj -c Release
 ```
